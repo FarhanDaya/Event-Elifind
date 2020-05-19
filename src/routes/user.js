@@ -22,15 +22,14 @@ router.post('/Signup',unique,async (req,res)=>{
   })
 
 router.get('/test',async(req,res)=>{
-    req.session.test = "yes";
-    res.send(true)
+    req.session.test = await "yes";
+    res.send(req.session.test)
 })
 
 router.get('/testing',(req,res)=>{
-    if(req.session.test){
-        return res.send(req.session.test)
-    }
-    res.send('Please authenticate')
+
+    res.send(req.session.test)
+   
 })
 
 
