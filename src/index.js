@@ -9,21 +9,21 @@ const port = process.env.PORT || 3000
 
 app.use(express.json()); 
 app.use(express.urlencoded( {extended: true}));
-app.use(session({
+// app.use(session({
 
-    store:new sessionStore({mongooseConnection:mongoose.connection}),
-    name:'sid2',
-    resave:false,
-    saveUninitialized:false,
-    secret:process.env.SSECRET,
-    maxAge:86400000 ,
-    cookie:{
-      maxAge:86400000,
-      sameSite:true,
-      secure:true
-    }
+//     store:new sessionStore({mongooseConnection:mongoose.connection}),
+//     name:'sid2',
+//     resave:false,
+//     saveUninitialized:false,
+//     secret:process.env.SSECRET,
+//     maxAge:86400000 ,
+//     cookie:{
+//       maxAge:86400000,
+//       sameSite:true,
+//       secure:true
+//     }
   
-}));
+// }));
 app.use('/User',userRouter);
 
 app.get('/',async(req,res)=>{
