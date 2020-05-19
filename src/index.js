@@ -5,7 +5,7 @@ const userRouter = require('./routes/user');
 const session = require('express-session');
 const sessionStore = require('connect-mongo')(session)
 const app = express();
-
+const port = process.env.PORT || 3000
 
 app.use(express.json()); 
 app.use(express.urlencoded( {extended: true}));
@@ -20,7 +20,7 @@ app.use(session({
     cookie:{
       maxAge:86400000,
       sameSite:true,
-      secure:false
+      secure:true
     }
   
 }));
@@ -30,6 +30,6 @@ app.get('/',async(req,res)=>{
     res.send("Welcome!")
 })
 
-app.listen(process.env.PORT,()=>{
-    console.log(`Server is running on port ${process.env.PORT}`)
+app.listen(port,()=>{
+    console.log(`Server is running on port ${port}`)
 })
