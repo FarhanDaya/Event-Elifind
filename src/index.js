@@ -27,7 +27,7 @@ app.use(session({
 app.use('/User',userRouter);
 
 app.get('/',async(req,res)=>{
-    res.send("Welcome!")
+    res.send("Welcome! Sahran Khuwaja production")
 })
 
 app.listen(port,()=>{
