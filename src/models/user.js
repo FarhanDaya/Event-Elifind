@@ -3,6 +3,7 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Tokens = require('./token');
+const sharp = require('sharp');
 
 const userSchema = new mongoose.Schema({
     FirstName:{
@@ -33,8 +34,8 @@ const userSchema = new mongoose.Schema({
         trim:true
     },
     Phone:{
-        type:Number,
-        default:0
+        type:String,
+        default:'0'
     },
     Email:{
         type:String,
@@ -126,6 +127,46 @@ userSchema.methods.generateAuthToken = async function(){
     }
 
 
+}
+
+userSchema.statics.upload = async(file,id)=>{
+   
+    try{
+        const image = await sharp(file).png().toBuffer();
+        const user = await User.findById(id);
+        user.Dp = await image
+        await user.save();
+        return image;
+
+    }catch(e){
+        console.log(e)
+    }
+}
+
+userSchema.statics.update = async(data)=>{
+    
+    try{
+        const user = await User.findOneAndUpdate({_id:data._id},data);
+        await user.save();
+        return true;
+        
+
+    }catch(e){
+        console.log(e);
+        
+    }
+}
+
+userSchema.statics.updatePassword = async(pass,user)=>{
+    try{
+
+        user.Password = await pass;
+        await user.save();
+        return true;
+
+    }catch(e){
+        console.log(e);
+    }
 }
 
 const User = mongoose.model('Users',userSchema);
